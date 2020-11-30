@@ -1,0 +1,32 @@
+<html>
+    <head>
+      <title>
+            ToDo Page
+        </title>
+        <style>
+            .completed
+            {
+                text-decoration: line-through; 
+            }
+        </style>
+    </head>
+    <body>
+        <a href="{% url 'delete' %}"><button>Delete Completed</button></a>
+        <a href="{% url 'deleteall' %}"><button>Delete All</button></a>
+        <form action="{% url 'addnew' %}" method = "POST">
+            {% csrf_token %}
+            {{form.text}}
+
+            <button type="submit">Add</button>
+            <ul>
+                {% for items in todo_items %}
+                {% if items.completed %}
+                <li class="completed">{{items.text}}</li>
+                {% else %}
+                <a href="{% url 'completed' items.id %}"><li>{{items.text}}</li></a> <br>
+                {% endif %}
+                {% endfor %}
+            </ul>
+    </form>
+    </body>    
+<html>
